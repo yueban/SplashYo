@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.quanturium.bouquet'
+apply plugin: 'com.tencent.matrix-plugin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -51,6 +52,14 @@ android {
         tasks.withType(JavaCompile) {
             options.compilerArgs << "-Xmaxerrs" << "500"
         }
+    }
+}
+
+matrix {
+    trace {
+        enable = true    //if you don't want to use trace canary, set false
+        baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
+        blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
     }
 }
 
@@ -104,4 +113,11 @@ dependencies {
     implementation "com.elvishew:xlog:$rootProject.xlogVersion"
     implementation "com.gyf.immersionbar:immersionbar:$rootProject.immersionbarVersion"
     implementation "com.github.Commit451.ForegroundViews:foregroundviews:$rootProject.foregroundviewsVersion"
+    implementation group: "com.tencent.matrix", name: "matrix-android-lib", version: rootProject.matrixVersion, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-android-commons", version: rootProject.matrixVersion, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-trace-canary", version: rootProject.matrixVersion, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-resource-canary-android", version: rootProject.matrixVersion, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-resource-canary-common", version: rootProject.matrixVersion, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-io-canary", version: rootProject.matrixVersion, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-sqlite-lint-android-sdk", version: rootProject.matrixVersion, changing: true
 }
